@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hungslab.urban.mapper.PaywayMapper">
+
+    <resultMap id="PayWayResult" type="PayWay">
+        <id     property="paywayId"     column="payway_id"     />
+        <result property="paywayName"   column="payway_name"    />
+        <result property="paywayStatus" column="payway_status" />
+        <result property="createTime"   column="create_time" />
+    </resultMap>
+
+    <sql id="selectPayWayVo">
+        select p.payway_id, p.payway_name, p.payway_status, p.create_time
+        from sys_payway p
+    </sql>
+
+    <select id="selectPayWayById" parameterType="Long" resultMap="PayWayResult">
+        select
+        <include refid="selectPayWayVo" />
+        from sys_payway
+        where  payway_id = #{paywayId}
+    </select>
+
+    <select id="selectPayWayList" parameterType="PayWay" resultMap="PayWayResult">
+        <include refid="selectPayWayVo"/>
+        where Payway_status = '1'
+        <if test="PayWayId != null and PayWayId != 0">
+            AND Payway_id = #{PayWayId}
+        </if>
+        <if test="PayWayName != null and PayWayName != ''">
+            AND Payway_name like concat('%', #{PayWayName}, '%')
+        </if>
+        <if test="PayWayTitle != null and PayWayTitle != ''">
+            AND Payway_title like concat('%', #{PayWayTitle}, '%')
+        </if >
+    </select>
+
+    <delete id="deletePayWayById" parameterType="Long">
+        delete from sys_payway
+        where  payway_id = #{paywayId}
+    </delete>
+
+    <delete id="deletePayWayByIds" parameterType="String">
+        delete from sys_payway where sys_payway.payway_id in
+        <foreach collection="array" item="paywayId" open="(" separator="," close=")">
+            #{paywayId}
+        </foreach>
+    </delete>
+
+    <insert id="insertPayWay"  parameterType="PayWay" >
+        insert into sys_payway
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="payWayId != null and payWayId != 0">payway_id,</if>
+            <if test="payWayName != null and payWayName != ''">payway_name,</if>
+            <if test="payWayStatus != null ">payway_status,</if>
+            create_time
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="payWayId != null and productId != 0">#{payWayId},</if>
+            <if test="payWayName != null and productName != ''">#{payWayName},</if>
+            <if test="payWayStatus != null">#{payWayStatus},</if>
+            sysdate()
+        </trim>
+    </insert>
+    <update id="updatePayWay" parameterType="PayWay">
+        update sys_payway
+        <set>
+            <if test="payWayId != null and payWayId != 0">payway_name=#{payWayId},</if>
+            <if test="payWayName != null and payWayName != ''">payway_name = #{paywayName},</if>
+            <if test="payWayStatus != null">payway_status = #{paywayStatus},</if>
+        </set>
+        where   payway_id = #{paywayId}
+    </update>
+</mapper>

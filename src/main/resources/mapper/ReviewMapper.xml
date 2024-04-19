@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hungslab.urban.mapper.ReviewMapper">
+
+    <resultMap type="Review" id="ReviewResult" >
+        <id     property="reviewId"         column="review_id" />
+        <result property="reviewContent"    column="review_content" />
+        <result property="reviewCreateTime" column="review_create_time" />
+        <result property="reviewUserId"     column="review_user_id" />
+        <result property="reviewProductId"  column="review_product_id" />
+        <result property="reviewOrderId"    column="review_order_id" />
+    </resultMap>
+
+    <sql id="selectReviewVo">
+        select  r.review_id, r.review_content, r.review_create_time, r.review_user_id, r.review_product_id, r.review_order_id
+        from sys_review r
+    </sql>
+
+
+    <select id="selectReviewById" parameterType="Long" resultMap="ReviewResult">
+        <include refid="selectReviewVo"/>
+        where  review_id = #{reviewId}
+    </select>
+
+    <select id="selectReviewList" parameterType="Review" resultMap="ReviewResult">
+        <include refid="selectReviewVo"/>
+        where
+        <if test="ReviewId != null and ReviewId != 0">
+            AND Review_id = #{ReviewId}
+        </if>
+        <if test="ReviewContent != null and productName != ''">
+            AND review_content like concat('%', #{contentName}, '%')
+        </if>
+        <if test="reviewUserId != null and reviewUserId != 0">
+            AND review_user_id like concat('%', #{reviewUserId}, '%')
+        </if>
+        <if test="reviewProductId != null and reviewProductId != 0">
+            AND review_product_id like concat('%', #{reviewProductId}, '%')
+        </if>
+        <if test="reviewOrderId != null and reviewOrderId != 0">
+            AND review_order_id like concat('%', #{reviewOrderId}, '%')
+        </if>
+    </select>
+
+    <delete id="deleteReviewById" parameterType="Long">
+        delete from sys_review
+        where  review_id = #{reviewId}
+    </delete>
+
+    <delete id="deleteReviewByIds" parameterType="String">
+        delete from sys_review where sys_review.review_id in
+        <foreach collection="array" item="reviewId" open="(" separator="," close=")">
+            #{reviewId}
+        </foreach>
+    </delete>
+
+    <insert id="insertReview" parameterType="Review">
+        insert into sys_review
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reviewId != null and reviewId != 0">review_id,</if>
+            <if test="reviewContent != null and reviewContent != ''">review_content,</if>
+            review_create_time,
+            <if test="reviewUserId != null and reviewUserId != 0">review_user_id,</if>
+            <if test="reviewProductId != null and reviewProductId != 0">review_product_id,</if>
+            <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reviewId != null and reviewId != 0">#{reviewId},</if>
+            <if test="reviewContent != null and reviewContent != ''">#{reviewContent},</if>
+            sysdata(),
+            <if test="reviewUserId != null and reviewUserId != 0">#{reviewUserId},</if>
+            <if test="reviewProductId != null and reviewProductId != 0">#{reviewProductId},</if>
+            <if test="reviewOrderId != null and reviewOrderId != 0">#{reviewOrderId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateReview" parameterType="Review">
+        update sys_review
+        <set>
+            <if test="reviewContent != null and reviewId != 0">review_content = #{reviewContent},</if>
+            <if test="reviewUserId != null and reviewUserId != 0">review_user_id = #{reviewUserId},</if>
+            <if test="reviewProductId != null and reviewProductId != 0">review_product_id = #{reviewProductId},</if>
+            <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id = #{reviewOrderId},</if>
+        </set>
+        where   review_id = #{reviewId}
+    </update>
+</mapper>

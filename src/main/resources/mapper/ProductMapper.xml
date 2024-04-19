@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hungslab.urban.mapper.ProductMapper">
+    <resultMap type="Product" id="ProductResult">
+        <id     property="productId"            column="product_id"             />
+        <result property="productName"          column="product_name"           />
+        <result property="productTitle"         column="product_title"          />
+        <result property="productAvatar"        column="product_avatar"         />
+        <result property="productPrice"         column="product_price"          />
+        <result property="productCount"         column="product_count"          />
+        <result property="productSaleCount"     column="product_sale_count"     />
+        <result property="productStatus"        column="product_status"         />
+        <result property="productCreateTime"    column="product_create_time"    />
+    </resultMap>
+
+    <sql id="selectProductVo">
+        select p.product_id, p.product_name, p.product_title, p.product_avatar, p.product_price, p.product_count, p.product_sale_count, p.product_status, p.product_create_time
+        from sys_product p
+    </sql>
+
+    <select id="selectProductById" parameterType="Long" resultMap="ProductResult">
+        <include refid="selectProductVo"/>
+        where  product_id = #{productId}
+    </select>
+
+    <select id="selectProductList" parameterType="Product" resultMap="ProductResult">
+        <include refid="selectProductVo"/>
+        where product_status = '1'
+        <if test="productId != null and productId != 0">
+            AND product_id = #{productId}
+        </if>
+        <if test="productName != null and productName != ''">
+            AND product_name like concat('%', #{productName}, '%')
+        </if>
+        <if test="productTitle != null and productTitle != ''">
+            AND product_title like concat('%', #{productTitle}, '%')
+        </if>
+    </select>
+
+    <delete id="deleteProductById" parameterType="Long">
+        delete from sys_product
+        where  product_id = #{productId}
+    </delete>
+
+    <delete id="deleteProductByIds" parameterType="String">
+        delete from sys_product where sys_product.product_id in
+        <foreach collection="array" item="productId" open="(" separator="," close=")">
+            #{productId}
+        </foreach>
+    </delete>
+
+    <insert id="insertSelective"  parameterType="Product">
+        insert into sys_product(
+        <if test="productId != null and productId != 0">product_id,</if>
+        <if test="productName != null and productName != ''">product_name,</if>
+        <if test="productTitle != null and productName != ''">product_title,</if>
+        <if test="productAvatar != null and productAvatar != ''">product_avatar,</if>
+        <if test="productPrice != null and productPrice != 0">product_price,</if>
+        <if test="productCount != null and productCount != 0">product_count,</if>
+        <if test="productSaleCount != null and productSaleCount != 0">product_sale_count,</if>
+        <if test="productStatus != null">product_status,</if>
+        product_create_time
+        )values(
+        <if test="productId != null and productId != 0">#{productId},</if>
+        <if test="productName != null and productName != ''">#{productName},</if>
+        <if test="productTitle != null and productName != ''">#{productTitle},</if>
+        <if test="productAvatar != null and productAvatar != ''">#{productAvatar},</if>
+        <if test="productPrice != null and productPrice != 0">#{productPrice},</if>
+        <if test="productCount != null and productCount != 0">#{productCount},</if>
+        <if test="productSaleCount != null and productSaleCount != 0">#{productSaleCount},</if>
+        <if test="productStatus != null">#{productStatus},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateProduct" parameterType="Product">
+        update sys_product
+        <set>
+                <if test="productName != null">
+                    product_name = #{productName},
+                </if>
+                <if test="productTitle != null">
+                    product_title = #{productTitle},
+                </if>
+                <if test="productAvatar != null">
+                    product_avatar = #{productAvatar},
+                </if>
+                <if test="productPrice != null">
+                    product_price = #{productPrice},
+                </if>
+                <if test="productCount != null">
+                    product_count = #{productCount},
+                </if>
+                <if test="productSaleCount != null">
+                    product_sale_count = #{productSaleCount},
+                </if>
+                <if test="productStatus != null">
+                    product_status = #{productStatus},
+                </if>
+        </set>
+        where   product_id = #{productId}
+    </update>
+</mapper>

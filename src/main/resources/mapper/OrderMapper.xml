@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hungslab.urban.mapper.OrderMapper">
+
+    <resultMap id="OrderResult" type="Order">
+            <id     property="orderId"     column="order_id"        />
+            <result property="orderName"   column="order_name"      />
+            <result property="orderUser"   column="order_user"      />
+            <result property="payWay"      column="pay_way"         />
+            <result property="orderPrice"  column="order_price"     />
+            <result property="orderStatus" column="order_status"    />
+            <result property="createTime"  column="create_time"     />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select o.order_id, o.order_name, o.order_user, o.pay_way, o.order_price, o.order_status, o.create_time
+        from sys_order o
+    </sql>
+
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where  order_id = #{orderId}
+    </select>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where order_status = '1'
+        <if test="OrderId != null and OrderId != 0">
+            AND order_id = #{orderId}
+        </if>
+        <if test="orderUser != null and orderUser != ''">
+            AND order_user like concat('%', #{orderUser}, '%')
+        </if>
+        <if test="payWay != null and payWay != ''">
+            AND pay_way like concat('%', #{payWay}, '%')
+        </if>
+        <if test="orderName != null and orderName != ''">
+            AND order_name like concat('%', #{orderName}, '%')
+        </if>
+        <if test="orderPrice != null and orderPrice != ''">
+            AND order_price like concat('%', #{orderPrice}, '%')
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND order_status like concat('%', #{orderStatus}, '%')
+        </if>
+    </select>
+
+    <delete id="deleteOrderById" parameterType="Long">
+        delete from sys_order
+        where  order_id = #{orderId}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from sys_order where sys_order.order_id in
+        <foreach collection="array" item="orderId" open="(" separator="," close=")">
+            #{orderId}
+        </foreach>
+    </delete>
+
+
+    <insert id="insertOrder" parameterType="Order">
+        insert into sys_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null and orderId != 0">order_id,</if>
+            <if test="orderName != null and orderName != ''">order_name,</if>
+            <if test="orderUser != null and orderUser != ''">order_user,</if>
+            <if test="payWay != null and payWay != ''">pay_way,</if>
+            <if test="orderPrice != null and orderPrice != 0">order_price,</if>
+            <if test="orderStatus != null">order_status,</if>
+        </trim>
+
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null and orderId != 0">#{orderId},</if>
+            <if test="orderName != null and orderName != ''">#{orderName},</if>
+            <if test="orderUser != null and orderUser != ''">#{orderUser},</if>
+            <if test="payWay != null and payWay != ''">#{payWay},</if>
+            <if test="orderPrice != null and orderPrice != 0">#{orderPrice},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            sysdate()
+        </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update sys_order
+        <set>
+            <if test="orderName != null and orderName != ''">order_name = #{orderName},</if>
+            <if test="orderUser != null and orderUser != ''">order_user = #{orderUser},</if>
+            <if test="payWay != null and payWay != ''">pay_way = #{payWay},</if>
+            <if test="orderPrice != null and orderPrice != 0">order_price = #{orderPrice},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </set>
+        where   order_id = #{orderId}
+    </update>
+
+
+</mapper>

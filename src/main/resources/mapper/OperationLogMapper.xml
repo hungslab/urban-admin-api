@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hungslab.urban.mapper.OperationLogMapper">
+
+    <resultMap type="OperationLog" id="OperationLogResult">
+        <id     property="operId"         column="oper_id"        />
+        <result property="description"    column="description"      />
+        <result property="operName"       column="oper_name"      />
+        <result property="operIp"         column="oper_ip"        />
+        <result property="operatorType"   column="operator_type"  />
+        <result property="method"         column="method"         />
+        <result property="operParam"      column="oper_param"     />
+        <result property="jsonResult"     column="json_result"    />
+        <result property="operTime"       column="oper_time"      />
+        <result property="remark"         column="remark"          />
+    </resultMap>
+
+    <sql id="selectOperationLogVo">
+        select o.oper_id, o.description, o.oper_name, o.oper_ip, o.operator_type, o.method, o.oper_param, o.json_result, o.oper_time, o.remark
+        from sys_oper_log o
+    </sql>
+
+    <insert id="insertOperationLog" parameterType="OperationLog">
+        insert into sys_oper_log(description, oper_name, oper_ip, operator_type, method, oper_param, json_result, oper_time, remark)
+        values (#{description}, #{operName}, #{operIp}, #{operatorType}, #{method},  #{operParam}, #{jsonResult}, sysdate(), #{remark})
+    </insert>
+
+    <select id="selectOperationLogList" parameterType="OperationLog" resultMap="OperationLogResult">
+        <include refid="selectOperationLogVo"/>
+        <where>
+            <if test="operIp != null and operIp != ''">
+                AND oper_ip like concat('%', #{operIp}, '%')
+            </if>
+            <if test="description != null and description != ''">
+                AND description like concat('%', #{description}, '%')
+            </if>
+            <if test="operatorType != null">
+                AND business_type = #{operatorType}
+            </if>
+            <if test="operator_type != null and operator_type.length > 0">
+                AND business_type in
+                <foreach collection="operatorType" item="operatorType" open="(" separator="," close=")">
+                    #{operatorType}
+                </foreach>
+            </if>
+            <if test="operName != null and operName != ''">
+                AND oper_name like concat('%', #{operName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteOperationLogByIds" parameterType="String">
+        delete from sys_oper_log where oper_id in
+        <foreach collection="array" item="operId" open="(" separator="," close=")">
+            #{operId}
+        </foreach>
+    </delete>
+
+    <select id="selectOperationLogById" parameterType="Long" resultMap="OperationLogResult">
+        <include refid="selectOperationLogVo"/>
+        where oper_id = #{operId}
+    </select>
+
+    <update id="cleanOperationLog">
+        truncate table sys_oper_log
+    </update>
+
+</mapper>

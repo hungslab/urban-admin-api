@@ -158,29 +158,30 @@ INSERT INTO `sys_payway` VALUES (3, '银行卡', '0', sysdate());
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_review`;
 CREATE TABLE `sys_review`  (
-                           `review_id` bigint(20) NOT NULL AUTO_INCREMENT,
-                           `review_content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-                           `review_create_time` datetime NOT NULL,
-                           `review_user_id` bigint(20) NOT NULL,
-                           `review_product_id` bigint(20) NOT NULL,
-                           `review_order_id` bigint(20) NOT NULL,
+                           `review_id`          bigint(20)      NOT NULL AUTO_INCREMENT,
+                           `review_content`     mediumtext      CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                           `review_create_time` datetime        NOT NULL,
+                           `review_user_id`     bigint(20)      NOT NULL,
+                           `review_product_id`  bigint(20)      NOT NULL,
+                           `review_order_id`    bigint(20)      NOT NULL,
+                           `review_status`      char(1)         default '0'        comment '评论状态（0未启用 1启用）',
                            PRIMARY KEY (`review_id`) USING BTREE
 ) engine=innodb auto_increment=100 comment = '商品评论表';
 
 -- ----------------------------
 -- Records of review
 -- ----------------------------
-INSERT INTO `sys_review` VALUES (1, '测试测试测试测试测试测试', sysdate(), 1, 6, 55);
-INSERT INTO `sys_review` VALUES (2, '手机很好！！！！！！！！！！拍照很清晰', sysdate(), 1, 3, 53);
-INSERT INTO `sys_review` VALUES (3, '质量很好', sysdate(), 1, 2, 61);
-INSERT INTO `sys_review` VALUES (4, 'dda', sysdate(), 1, 1, 64);
-INSERT INTO `sys_review` VALUES (5, '很好', sysdate(), 1, 3, 65);
-INSERT INTO `sys_review` VALUES (6, '非常好看！质量也不错！', sysdate(), 1, 7, 82);
-INSERT INTO `sys_review` VALUES (7, '很早之前就加入购物车了！买回来后果然没失望！质量很好，穿着也很舒服！', sysdate(), 1, 5, 83);
-INSERT INTO `sys_review` VALUES (8, '衣服很好看，发货很及时！', sysdate(), 1, 1, 85);
-INSERT INTO `sys_review` VALUES (9, '衣服很好看！模特也是哦(笑', sysdate(), 1, 1, 86);
-INSERT INTO `sys_review` VALUES (10, '衣服很时尚，质量也挺好', sysdate(), 1, 1, 88);
-INSERT INTO `sys_review` VALUES (11, '给姐姐买的衣服，姐姐很喜欢！质量很不错', sysdate(), 1, 1, 87);
-INSERT INTO `sys_review` VALUES (12, '发的衣服有点大了，其他还行，好评给卖家一个鼓励！', sysdate(), 1, 1, 90);
-INSERT INTO `sys_review` VALUES (13, '发货过程有点慢，衣服还行吧！', sysdate(), 1, 1, 89);
-INSERT INTO `sys_review` VALUES (14, '衣服特别看好，穿上去特潮，男票超级喜欢\r\n好评！', sysdate(), 1, 1, 93);
+INSERT INTO `sys_review` VALUES (1, '测试测试测试测试测试测试', sysdate(), 1, 6, 55, 1);
+INSERT INTO `sys_review` VALUES (2, '手机很好！！！！！！！！！！拍照很清晰', sysdate(), 1, 3, 53, 1);
+INSERT INTO `sys_review` VALUES (3, '质量很好', sysdate(), 1, 2, 61, 1);
+INSERT INTO `sys_review` VALUES (4, 'dda', sysdate(), 1, 1, 64, 1);
+INSERT INTO `sys_review` VALUES (5, '很好', sysdate(), 1, 3, 65, 1);
+INSERT INTO `sys_review` VALUES (6, '非常好看！质量也不错！', sysdate(), 1, 7, 82, 1);
+INSERT INTO `sys_review` VALUES (7, '很早之前就加入购物车了！买回来后果然没失望！质量很好，穿着也很舒服！', sysdate(), 1, 5, 83, 1);
+INSERT INTO `sys_review` VALUES (8, '衣服很好看，发货很及时！', sysdate(), 1, 1, 85, 1);
+INSERT INTO `sys_review` VALUES (9, '衣服很好看！模特也是哦(笑', sysdate(), 1, 1, 86, 1);
+INSERT INTO `sys_review` VALUES (10, '衣服很时尚，质量也挺好', sysdate(), 1, 1, 88, 1);
+INSERT INTO `sys_review` VALUES (11, '给姐姐买的衣服，姐姐很喜欢！质量很不错', sysdate(), 1, 1, 87, 1);
+INSERT INTO `sys_review` VALUES (12, '发的衣服有点大了，其他还行，好评给卖家一个鼓励！', sysdate(), 1, 1, 90, 1);
+INSERT INTO `sys_review` VALUES (13, '发货过程有点慢，衣服还行吧！', sysdate(), 1, 1, 89, 1);
+INSERT INTO `sys_review` VALUES (14, '衣服特别看好，穿上去特潮，男票超级喜欢\r\n好评！', sysdate(), 1, 1, 93, 1);

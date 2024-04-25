@@ -37,10 +37,10 @@
                 AND description like concat('%', #{description}, '%')
             </if>
             <if test="operatorType != null">
-                AND business_type = #{operatorType}
+                AND operator_type = #{operatorType}
             </if>
-            <if test="operator_type != null and operator_type.length > 0">
-                AND business_type in
+            <if test="operatorType != null and operatorType.length > 0">
+                AND operator_type in
                 <foreach collection="operatorType" item="operatorType" open="(" separator="," close=")">
                     #{operatorType}
                 </foreach>
@@ -49,6 +49,7 @@
                 AND oper_name like concat('%', #{operName}, '%')
             </if>
         </where>
+        order by oper_id desc
     </select>
 
     <delete id="deleteOperationLogByIds" parameterType="String">

@@ -11,10 +11,11 @@
         <result property="reviewUserId"     column="review_user_id" />
         <result property="reviewProductId"  column="review_product_id" />
         <result property="reviewOrderId"    column="review_order_id" />
+        <result property="reviewStatus"    column="review_status" />
     </resultMap>
 
     <sql id="selectReviewVo">
-        select  r.review_id, r.review_content, r.review_create_time, r.review_user_id, r.review_product_id, r.review_order_id
+        select  r.review_id, r.review_content, r.review_create_time, r.review_user_id, r.review_product_id, r.review_order_id, r.review_status
         from sys_review r
     </sql>
 
@@ -26,21 +27,21 @@
 
     <select id="selectReviewList" parameterType="Review" resultMap="ReviewResult">
         <include refid="selectReviewVo"/>
-        where
+            where r.review_status = '1'
         <if test="ReviewId != null and ReviewId != 0">
-            AND Review_id = #{ReviewId}
+            AND r.review_id = #{ReviewId}
         </if>
-        <if test="ReviewContent != null and productName != ''">
-            AND review_content like concat('%', #{contentName}, '%')
+        <if test="ReviewContent != null and ReviewContent != ''">
+            AND r.review_content like concat('%', #{ReviewContent}, '%')
         </if>
         <if test="reviewUserId != null and reviewUserId != 0">
-            AND review_user_id like concat('%', #{reviewUserId}, '%')
+            AND r.review_user_id = #{reviewUserId}
         </if>
         <if test="reviewProductId != null and reviewProductId != 0">
-            AND review_product_id like concat('%', #{reviewProductId}, '%')
+            AND r.review_product_id = #{reviewProductId}
         </if>
         <if test="reviewOrderId != null and reviewOrderId != 0">
-            AND review_order_id like concat('%', #{reviewOrderId}, '%')
+            AND r.review_order_id = #{reviewOrderId}
         </if>
     </select>
 
@@ -65,6 +66,7 @@
             <if test="reviewUserId != null and reviewUserId != 0">review_user_id,</if>
             <if test="reviewProductId != null and reviewProductId != 0">review_product_id,</if>
             <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id,</if>
+            <if test="reviewOrderId != null and reviewOrderId != 0">#{reviewOrderId},</if>
         </trim>
 
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -84,6 +86,7 @@
             <if test="reviewUserId != null and reviewUserId != 0">review_user_id = #{reviewUserId},</if>
             <if test="reviewProductId != null and reviewProductId != 0">review_product_id = #{reviewProductId},</if>
             <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id = #{reviewOrderId},</if>
+            <if test="reviewStatus != null and reviewStatus != ''">review_status = #{reviewStatus},</if>
         </set>
         where   review_id = #{reviewId}
     </update>

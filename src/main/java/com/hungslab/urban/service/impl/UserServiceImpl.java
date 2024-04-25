@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         {
             return AjaxResult.warn("用户密码不能为空");
         }
-        else if (Objects.isNull(userMapper.checkUserNameUnique(username)))
+        else if (!Objects.isNull(userMapper.checkUserNameUnique(username)))
         {
             return AjaxResult.warn("保存用户'" + username + "'失败，注册账号已存在");
         }

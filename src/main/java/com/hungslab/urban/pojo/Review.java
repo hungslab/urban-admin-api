@@ -39,6 +39,8 @@ public class Review implements Serializable {
     /**
      * 
      */
+    private char reviewStatus;
+
     private Long reviewOrderId;
 
     private static final long serialVersionUID = 1L;

@@ -35,7 +35,7 @@ public class User
     private String nickName;
 
     /** 用户邮箱 */
-    @Size(min = 0, max = 11, message = "手机号码长度不能超过11个字符")
+    @Size(min = 0, max = 30, message = "邮箱长度不能超过30个字符")
     private String email;
 
     /** 手机号码 */

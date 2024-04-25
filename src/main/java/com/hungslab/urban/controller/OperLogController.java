@@ -2,7 +2,6 @@ package com.hungslab.urban.controller;
 
 import com.hungslab.urban.core.annotation.OperationLogging;
 import com.hungslab.urban.core.constant.OperLogType;
-import com.hungslab.urban.core.page.TableDataInfo;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.pojo.OperationLog;
 import com.hungslab.urban.service.OperationLogService;
@@ -18,10 +17,10 @@ import java.util.List;
  * @date 2024-04-08
  * @Description
  */
-@Controller
+@RestController
 @CrossOrigin
 @Tag(name = "日志管理相关接口")
-@RequestMapping("/system/monitor/operlog")
+@RequestMapping("/system/operlog")
 public class OperLogController extends BaseController
 {
 
@@ -29,11 +28,11 @@ public class OperLogController extends BaseController
     private OperationLogService operationLogService;
 
     @PostMapping("/list")
-    public TableDataInfo list(OperationLog operationLog)
+    public AjaxResult list(@RequestBody OperationLog operationLog)
     {
-        startPage();
+        // startPage();
         List<OperationLog> list = operationLogService.selectOperationLogList(operationLog);
-        return getDataTable(list);
+        return AjaxResult.success(list);
     }
 
     @OperationLogging(value= "操作日志", type = OperLogType.DELETE)

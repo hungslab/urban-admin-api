@@ -100,9 +100,9 @@ public class UserController extends BaseController {
     @Operation(summary = "用户删除接口")
     @OperationLogging(value = "删除用户", type = OperLogType.DELETE)
     @DeleteMapping("/delete")
-    public AjaxResult remove(@Parameter(description = "用户ID") @PathVariable Long userid)
+    public AjaxResult remove(@Parameter(description = "用户ID") Long userId)
     {
-        return userService.deleteRoleById(userid);
+        return userService.deleteRoleById(userId);
     }
 
     /**
@@ -111,7 +111,7 @@ public class UserController extends BaseController {
     @Operation(summary = "新增用户接口")
     @PostMapping("/add")
     @OperationLogging(value = "新增用户", type = OperLogType.INSERT)
-    public AjaxResult addSave(@Validated User user)
+    public AjaxResult addSave(@RequestBody @Validated User user)
     {
         if (!userService.checkUserNameUnique(user))
         {
@@ -134,9 +134,9 @@ public class UserController extends BaseController {
     /**
      * 管理员修改用户信息
      */
-    @Operation(summary = "用户信息修改接口")
+    @Operation(summary = "更新用户信息接口")
     @OperationLogging(value = "修改用户信息", type = OperLogType.UPDATE)
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public AjaxResult edit(@Validated User user)
     {
         if (!userService.checkUserNameUnique(user))

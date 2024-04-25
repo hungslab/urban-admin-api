@@ -57,7 +57,7 @@
 ## Install
 
 ```console
-$ git clone https://github.com/hungslab/Urban
+$ git clone https://github.com/hungslab/urban-admin-api.git
 ```
 ## Features
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2024-04-11
  * @Description 订单管理相关接口
  */
+@RestController
 @CrossOrigin
 @Tag(name = "订单管理相关接口")
 @RequestMapping("/system/order")

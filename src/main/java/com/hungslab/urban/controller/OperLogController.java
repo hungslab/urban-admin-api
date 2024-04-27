@@ -7,7 +7,6 @@ import com.hungslab.urban.pojo.OperationLog;
 import com.hungslab.urban.service.OperationLogService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,10 +35,10 @@ public class OperLogController extends BaseController
     }
 
     @OperationLogging(value= "操作日志", type = OperLogType.DELETE)
-    @PostMapping("/remove")
-    public AjaxResult remove(String ids)
+    @DeleteMapping("/remove")
+    public AjaxResult remove(Long operId)
     {
-        return toAjax(operationLogService.deleteOperationLogByIds(ids));
+        return toAjax(operationLogService.deleteOperationLogById(operId));
     }
 
     @OperationLogging(value= "操作日志", type = OperLogType.DELETE)

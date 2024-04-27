@@ -47,7 +47,7 @@ public class ReviewController {
      * @param review
      * @return
      */
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     AjaxResult updateProduct(@RequestBody @Validated Review review) {
         return reviewService.updateReview(review);
     }

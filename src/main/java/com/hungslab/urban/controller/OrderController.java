@@ -38,8 +38,8 @@ public class OrderController extends BaseController {
      * @param order
      * @return
      */
-    @GetMapping("/list")
-    AjaxResult list(Order order) {
+    @PostMapping("/list")
+    AjaxResult list(@RequestBody Order order) {
         return orderService.selectOrderList(order);
     }
 
@@ -49,7 +49,7 @@ public class OrderController extends BaseController {
      * @param order
      * @return
      */
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     AjaxResult updateProduct(@RequestBody Order order) {
         return orderService.updateOrder(order);
     }

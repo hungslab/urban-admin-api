@@ -27,21 +27,21 @@
 
     <select id="selectReviewList" parameterType="Review" resultMap="ReviewResult">
         <include refid="selectReviewVo"/>
-            where r.review_status = '1'
-        <if test="ReviewId != null and ReviewId != 0">
-            AND r.review_id = #{ReviewId}
+        where review_status = '1'
+        <if test="reviewId != null and reviewId != 0">
+            AND review_id = #{reviewId}
         </if>
-        <if test="ReviewContent != null and ReviewContent != ''">
-            AND r.review_content like concat('%', #{ReviewContent}, '%')
+        <if test="reviewContent != null and reviewContent != ''">
+            AND review_content like concat('%', #{reviewContent}, '%')
         </if>
         <if test="reviewUserId != null and reviewUserId != 0">
-            AND r.review_user_id = #{reviewUserId}
+            AND review_user_id = #{reviewUserId}
         </if>
         <if test="reviewProductId != null and reviewProductId != 0">
-            AND r.review_product_id = #{reviewProductId}
+            AND review_product_id = #{reviewProductId}
         </if>
         <if test="reviewOrderId != null and reviewOrderId != 0">
-            AND r.review_order_id = #{reviewOrderId}
+            AND review_order_id = #{reviewOrderId}
         </if>
     </select>
 
@@ -58,25 +58,21 @@
     </delete>
 
     <insert id="insertReview" parameterType="Review">
-        insert into sys_review
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        insert into sys_review(
             <if test="reviewId != null and reviewId != 0">review_id,</if>
             <if test="reviewContent != null and reviewContent != ''">review_content,</if>
-            review_create_time,
             <if test="reviewUserId != null and reviewUserId != 0">review_user_id,</if>
             <if test="reviewProductId != null and reviewProductId != 0">review_product_id,</if>
             <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id,</if>
-            <if test="reviewOrderId != null and reviewOrderId != 0">#{reviewOrderId},</if>
-        </trim>
-
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            review_create_time
+            )values(
             <if test="reviewId != null and reviewId != 0">#{reviewId},</if>
             <if test="reviewContent != null and reviewContent != ''">#{reviewContent},</if>
-            sysdata(),
             <if test="reviewUserId != null and reviewUserId != 0">#{reviewUserId},</if>
             <if test="reviewProductId != null and reviewProductId != 0">#{reviewProductId},</if>
             <if test="reviewOrderId != null and reviewOrderId != 0">#{reviewOrderId},</if>
-        </trim>
+            sysdate()
+            )
     </insert>
 
     <update id="updateReview" parameterType="Review">

@@ -3,7 +3,6 @@ package com.hungslab.urban.service.impl;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.mapper.OrderMapper;
 import com.hungslab.urban.pojo.Order;
-import com.hungslab.urban.pojo.Product;
 import com.hungslab.urban.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +35,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public AjaxResult selectOrderList(Order order) {
         List<Order> list = orderMapper.selectOrderList(order);
+
         return AjaxResult.success(list);
     }
 

@@ -49,7 +49,7 @@ public class ProductController extends BaseController {
      * @param product
      * @return
      */
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     AjaxResult updateProduct(@RequestBody @Validated Product product) {
         return productService.updateProduct(product);
     }

@@ -27,23 +27,20 @@
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         where order_status = '1'
-        <if test="OrderId != null and OrderId != 0">
+        <if test="orderId != null and orderId != 0">
             AND order_id = #{orderId}
         </if>
         <if test="orderUser != null and orderUser != ''">
             AND order_user like concat('%', #{orderUser}, '%')
         </if>
-        <if test="payWay != null and payWay != ''">
-            AND pay_way like concat('%', #{payWay}, '%')
-        </if>
         <if test="orderName != null and orderName != ''">
             AND order_name like concat('%', #{orderName}, '%')
         </if>
-        <if test="orderPrice != null and orderPrice != ''">
-            AND order_price like concat('%', #{orderPrice}, '%')
+        <if test="payWay != null and payWay != ''">
+            AND pay_way like concat('%', #{payWay}, '%')
         </if>
-        <if test="orderStatus != null and orderStatus != ''">
-            AND order_status like concat('%', #{orderStatus}, '%')
+        <if test="orderPrice != null and orderPrice != ''">
+            AND order_price = #{orderPrice}
         </if>
     </select>
 
@@ -61,17 +58,15 @@
 
 
     <insert id="insertOrder" parameterType="Order">
-        insert into sys_order
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        insert into sys_order(
             <if test="orderId != null and orderId != 0">order_id,</if>
             <if test="orderName != null and orderName != ''">order_name,</if>
             <if test="orderUser != null and orderUser != ''">order_user,</if>
             <if test="payWay != null and payWay != ''">pay_way,</if>
             <if test="orderPrice != null and orderPrice != 0">order_price,</if>
             <if test="orderStatus != null">order_status,</if>
-        </trim>
-
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            create_time
+            )values(
             <if test="orderId != null and orderId != 0">#{orderId},</if>
             <if test="orderName != null and orderName != ''">#{orderName},</if>
             <if test="orderUser != null and orderUser != ''">#{orderUser},</if>
@@ -79,7 +74,7 @@
             <if test="orderPrice != null and orderPrice != 0">#{orderPrice},</if>
             <if test="orderStatus != null">#{orderStatus},</if>
             sysdate()
-        </trim>
+            )
     </insert>
 
     <update id="updateOrder" parameterType="Order">
@@ -89,7 +84,7 @@
             <if test="orderUser != null and orderUser != ''">order_user = #{orderUser},</if>
             <if test="payWay != null and payWay != ''">pay_way = #{payWay},</if>
             <if test="orderPrice != null and orderPrice != 0">order_price = #{orderPrice},</if>
-            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="orderStatus != null and orderStatus != ''">order_status = #{orderStatus},</if>
         </set>
         where   order_id = #{orderId}
     </update>

@@ -1,7 +1,6 @@
 package com.hungslab.urban.mapper;
 
 import com.hungslab.urban.pojo.Order;
-import com.hungslab.urban.pojo.Payway;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

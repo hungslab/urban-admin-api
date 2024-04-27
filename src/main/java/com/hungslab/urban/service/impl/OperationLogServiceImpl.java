@@ -43,6 +43,11 @@ public class OperationLogServiceImpl implements OperationLogService {
         return operationLogMapper.selectOperationLogList(operLog);
     }
 
+    @Override
+    public int deleteOperationLogById(Long operId)
+    {
+        return operationLogMapper.deleteOperationLogById(operId);
+    }
     /**
      * 批量删除系统操作日志
      *

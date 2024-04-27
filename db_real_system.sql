@@ -161,9 +161,9 @@ CREATE TABLE `sys_review`  (
                            `review_id`          bigint(20)      NOT NULL AUTO_INCREMENT,
                            `review_content`     mediumtext      CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                            `review_create_time` datetime        NOT NULL,
-                           `review_user_id`     bigint(20)      NOT NULL,
-                           `review_product_id`  bigint(20)      NOT NULL,
-                           `review_order_id`    bigint(20)      NOT NULL,
+                           `review_user_id`     bigint(20)      default 1,
+                           `review_product_id`  bigint(20)      default 1,
+                           `review_order_id`    bigint(20)      default 1,
                            `review_status`      char(1)         default '0'        comment '评论状态（0未启用 1启用）',
                            PRIMARY KEY (`review_id`) USING BTREE
 ) engine=innodb auto_increment=100 comment = '商品评论表';

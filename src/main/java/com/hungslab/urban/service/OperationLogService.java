@@ -26,6 +26,13 @@ public interface OperationLogService {
     public List<OperationLog> selectOperationLogList(OperationLog operLog);
 
     /**
+     * 删除日志
+     * @param operId
+     * @return
+     */
+    public int deleteOperationLogById(Long operId);
+
+    /**
      * 批量删除系统操作日志
      *
      * @param ids 需要删除的数据

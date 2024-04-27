@@ -52,7 +52,12 @@
         order by oper_id desc
     </select>
 
-    <delete id="deleteOperationLogByIds" parameterType="String">
+    <delete id="deleteOperationLogById" parameterType="Long">
+        delete from sys_oper_log
+        where  oper_id = #{operId}
+    </delete>
+
+    <delete id="deleteOperationLogByIds" parameterType="Long">
         delete from sys_oper_log where oper_id in
         <foreach collection="array" item="operId" open="(" separator="," close=")">
             #{operId}

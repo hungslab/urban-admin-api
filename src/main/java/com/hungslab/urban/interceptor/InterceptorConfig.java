@@ -18,6 +18,8 @@ public class InterceptorConfig  implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(authInterceptor).excludePathPatterns(
+//                        "/**");
         registry.addInterceptor(authInterceptor).addPathPatterns("/**")
                 .excludePathPatterns(
                         "/v3/api-docs",

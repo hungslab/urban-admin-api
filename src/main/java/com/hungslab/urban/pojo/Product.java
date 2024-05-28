@@ -1,5 +1,6 @@
 package com.hungslab.urban.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -56,6 +57,13 @@ public class Product implements Serializable {
      * 创建时间
      */
     private Date productCreateTime;
+
+    @TableField(exist = false)
+    private  Integer size = 10;
+
+
+    @TableField(exist = false)
+    private Integer current = 1;
 
     private static final long serialVersionUID = 1L;
 }

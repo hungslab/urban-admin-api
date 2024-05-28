@@ -26,22 +26,23 @@
 
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
-        where order_status = '1'
-        <if test="orderId != null and orderId != 0">
-            AND order_id = #{orderId}
-        </if>
-        <if test="orderUser != null and orderUser != ''">
-            AND order_user like concat('%', #{orderUser}, '%')
-        </if>
-        <if test="orderName != null and orderName != ''">
-            AND order_name like concat('%', #{orderName}, '%')
-        </if>
-        <if test="payWay != null and payWay != ''">
-            AND pay_way like concat('%', #{payWay}, '%')
-        </if>
-        <if test="orderPrice != null and orderPrice != ''">
-            AND order_price = #{orderPrice}
-        </if>
+        <where>
+            <if test="orderId != null and orderId != 0">
+                AND order_id = #{orderId}
+            </if>
+            <if test="orderUser != null and orderUser != ''">
+                AND order_user like concat('%', #{orderUser}, '%')
+            </if>
+            <if test="orderName != null and orderName != ''">
+                AND order_name like concat('%', #{orderName}, '%')
+            </if>
+            <if test="payWay != null and payWay != ''">
+                AND pay_way like concat('%', #{payWay}, '%')
+            </if>
+            <if test="orderPrice != null and orderPrice != ''">
+                AND order_price = #{orderPrice}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteOrderById" parameterType="Long">

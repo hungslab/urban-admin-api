@@ -1,5 +1,7 @@
 package com.hungslab.urban.controller;
 
+import com.hungslab.urban.core.annotation.OperationLogging;
+import com.hungslab.urban.core.constant.OperLogType;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.pojo.Order;
 import com.hungslab.urban.service.OrderService;
@@ -28,6 +30,7 @@ public class OrderController extends BaseController {
      * @param order
      * @return
      */
+    @OperationLogging(value= "新增订单", type = OperLogType.INSERT)
     @PostMapping("/add")
     AjaxResult insertOrder(@RequestBody Order order) {
         return orderService.insertOrder(order);
@@ -59,6 +62,7 @@ public class OrderController extends BaseController {
      * @param orderId
      * @return
      */
+    @OperationLogging(value= "删除订单", type = OperLogType.DELETE)
     @DeleteMapping("/delete")
     AjaxResult deleteProduct(@Validated Long orderId) {
         return orderService.deleteOrderById(orderId);

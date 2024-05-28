@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 public interface OrderService {
 
-    AjaxResult deleteOrderById(Long orderid);
+    AjaxResult deleteOrderById(Long orderId);
 
     AjaxResult updateOrder(Order order);
 

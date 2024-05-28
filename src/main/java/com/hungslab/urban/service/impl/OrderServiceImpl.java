@@ -1,5 +1,8 @@
 package com.hungslab.urban.service.impl;
 
+import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.mapper.OrderMapper;
 import com.hungslab.urban.pojo.Order;
@@ -27,20 +30,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public AjaxResult deleteOrderById(Long id) {
-        orderMapper.deleteOrderById(id);
+    public AjaxResult deleteOrderById(Long orderId) {
+        orderMapper.deleteOrderById(orderId);
         return AjaxResult.success();
     }
 
     @Override
     public AjaxResult selectOrderList(Order order) {
-        List<Order> list = orderMapper.selectOrderList(order);
 
-        return AjaxResult.success(list);
+        PageHelper.startPage(order.getCurrent(),order.getSize());
+        List<Order> list = orderMapper.selectOrderList(order);
+        PageInfo<Order> pageInfo = new PageInfo<>(list);
+        return AjaxResult.success(pageInfo);
     }
 
     @Override
     public AjaxResult insertOrder(Order order) {
+        String text = SensitiveWordHelper.replace(order.getOrderName());
+        order.setOrderName(text);
         orderMapper.insertOrder(order);
         return AjaxResult.success();
     }

@@ -137,7 +137,7 @@ public class UserController extends BaseController {
     @Operation(summary = "更新用户信息接口")
     @OperationLogging(value = "修改用户信息", type = OperLogType.UPDATE)
     @PutMapping("/edit")
-    public AjaxResult edit(@Validated User user)
+    public AjaxResult edit(@Validated @RequestBody User user)
     {
         if (!userService.checkUserNameUnique(user))
         {

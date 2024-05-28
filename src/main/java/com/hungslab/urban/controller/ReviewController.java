@@ -1,5 +1,7 @@
 package com.hungslab.urban.controller;
 
+import com.hungslab.urban.core.annotation.OperationLogging;
+import com.hungslab.urban.core.constant.OperLogType;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.pojo.Review;
 import com.hungslab.urban.service.ReviewService;
@@ -26,6 +28,7 @@ public class ReviewController {
      * @param review
      * @return
      */
+    @OperationLogging(value= "新增评论", type = OperLogType.INSERT)
     @PostMapping("/add")
     public AjaxResult insertProduct(@RequestBody Review review) {
         return reviewService.insertReview(review);
@@ -57,6 +60,7 @@ public class ReviewController {
      * @param reviewId
      * @return
      */
+    @OperationLogging(value= "删除评论", type = OperLogType.DELETE)
     @DeleteMapping("/delete")
     AjaxResult deleteProduct(@Validated Long reviewId) {
         return reviewService.deleteReviewById(reviewId);

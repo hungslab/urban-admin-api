@@ -27,22 +27,23 @@
 
     <select id="selectReviewList" parameterType="Review" resultMap="ReviewResult">
         <include refid="selectReviewVo"/>
-        where review_status = '1'
-        <if test="reviewId != null and reviewId != 0">
-            AND review_id = #{reviewId}
-        </if>
-        <if test="reviewContent != null and reviewContent != ''">
-            AND review_content like concat('%', #{reviewContent}, '%')
-        </if>
-        <if test="reviewUserId != null and reviewUserId != 0">
-            AND review_user_id = #{reviewUserId}
-        </if>
-        <if test="reviewProductId != null and reviewProductId != 0">
-            AND review_product_id = #{reviewProductId}
-        </if>
-        <if test="reviewOrderId != null and reviewOrderId != 0">
-            AND review_order_id = #{reviewOrderId}
-        </if>
+        <where>
+            <if test="reviewId != null and reviewId != 0">
+                AND review_id = #{reviewId}
+            </if>
+            <if test="reviewContent != null and reviewContent != ''">
+                AND review_content like concat('%', #{reviewContent}, '%')
+            </if>
+            <if test="reviewUserId != null and reviewUserId != 0">
+                AND review_user_id = #{reviewUserId}
+            </if>
+            <if test="reviewProductId != null and reviewProductId != 0">
+                AND review_product_id = #{reviewProductId}
+            </if>
+            <if test="reviewOrderId != null and reviewOrderId != 0">
+                AND review_order_id = #{reviewOrderId}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteReviewById" parameterType="Long">
@@ -78,7 +79,7 @@
     <update id="updateReview" parameterType="Review">
         update sys_review
         <set>
-            <if test="reviewContent != null and reviewId != 0">review_content = #{reviewContent},</if>
+            <if test="reviewContent != null and reviewId != ' '">review_content = #{reviewContent},</if>
             <if test="reviewUserId != null and reviewUserId != 0">review_user_id = #{reviewUserId},</if>
             <if test="reviewProductId != null and reviewProductId != 0">review_product_id = #{reviewProductId},</if>
             <if test="reviewOrderId != null and reviewOrderId != 0">review_order_id = #{reviewOrderId},</if>

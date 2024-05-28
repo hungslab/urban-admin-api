@@ -25,16 +25,17 @@
 
     <select id="selectPayWayList" parameterType="PayWay" resultMap="PayWayResult">
         <include refid="selectPayWayVo"/>
-        where Payway_status = '1'
-        <if test="PayWayId != null and PayWayId != 0">
-            AND Payway_id = #{PayWayId}
-        </if>
-        <if test="PayWayName != null and PayWayName != ''">
-            AND Payway_name like concat('%', #{PayWayName}, '%')
-        </if>
-        <if test="PayWayTitle != null and PayWayTitle != ''">
-            AND Payway_title like concat('%', #{PayWayTitle}, '%')
-        </if >
+        <where>
+            <if test="PayWayId != null and PayWayId != 0">
+                AND Payway_id = #{PayWayId}
+            </if>
+            <if test="PayWayName != null and PayWayName != ''">
+                AND Payway_name like concat('%', #{PayWayName}, '%')
+            </if>
+            <if test="PayWayTitle != null and PayWayTitle != ''">
+                AND Payway_title like concat('%', #{PayWayTitle}, '%')
+            </if >
+        </where>
     </select>
 
     <delete id="deletePayWayById" parameterType="Long">

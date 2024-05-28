@@ -1,6 +1,7 @@
 package com.hungslab.urban.core.resp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -222,5 +223,16 @@ public class AjaxResult extends HashMap<String, Object>
     {
         super.put(key, value);
         return this;
+    }
+
+    public static AjaxResult successList(List data)
+    {
+        return AjaxResult.successLists("操作成功", data);
+    }
+
+
+    public static AjaxResult successLists(String msg, List data)
+    {
+        return new AjaxResult(Type.SUCCESS, msg, data);
     }
 }

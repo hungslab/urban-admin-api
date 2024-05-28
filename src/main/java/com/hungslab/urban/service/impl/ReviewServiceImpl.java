@@ -1,5 +1,6 @@
 package com.hungslab.urban.service.impl;
 
+import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.mapper.ReviewMapper;
 import com.hungslab.urban.pojo.Review;
@@ -22,6 +23,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public AjaxResult updateReview(Review review) {
+        String text = SensitiveWordHelper.replace(review.getReviewContent());
+        System.out.println(text);
+        review.setReviewContent(text);
         reviewMapper.updateReview(review);
         return AjaxResult.success();
     }
@@ -40,6 +44,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public AjaxResult insertReview(Review review) {
+        String text = SensitiveWordHelper.replace(review.getReviewContent());
+        review.setReviewContent(text);
         reviewMapper.insertReview(review);
         return AjaxResult.success();
     }

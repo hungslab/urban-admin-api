@@ -1,6 +1,9 @@
 package com.hungslab.urban.service.impl;
 
 import cn.hutool.core.convert.Convert;
+import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hungslab.urban.core.resp.AjaxResult;
 import com.hungslab.urban.mapper.ProductMapper;
 import com.hungslab.urban.pojo.Product;
@@ -23,6 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AjaxResult updateProduct(Product product) {
+        String text = SensitiveWordHelper.replace(product.getProductName());
+        product.setProductName(text);
         productMapper.updateProduct(product);
         return AjaxResult.success();
     }
@@ -41,12 +46,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public AjaxResult selectProductList(Product product) {
+        PageHelper.startPage(product.getCurrent(),product.getSize());
         List<Product> list = productMapper.selectProductList(product);
-        return AjaxResult.success(list);
+        PageInfo<Product> pageInfo = new PageInfo<>(list);
+        return AjaxResult.success(pageInfo);
     }
 
     @Override
     public AjaxResult insertProduct(Product product) {
+        String text = SensitiveWordHelper.replace(product.getProductName());
+        product.setProductName(text);
         productMapper.insertSelective(product);
         return AjaxResult.success();
     }

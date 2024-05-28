@@ -64,3 +64,10 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+
+#pagehelper分页插件配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

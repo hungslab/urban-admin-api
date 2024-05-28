@@ -27,16 +27,17 @@
 
     <select id="selectProductList" parameterType="Product" resultMap="ProductResult">
         <include refid="selectProductVo"/>
-        where product_status = '1'
-        <if test="productId != null and productId != 0">
-            AND product_id = #{productId}
-        </if>
-        <if test="productName != null and productName != ''">
-            AND product_name like concat('%', #{productName}, '%')
-        </if>
-        <if test="productTitle != null and productTitle != ''">
-            AND product_title like concat('%', #{productTitle}, '%')
-        </if>
+        <where>
+            <if test="productId != null and productId != 0">
+                AND product_id = #{productId}
+            </if>
+            <if test="productName != null and productName != ''">
+                AND product_name like concat('%', #{productName}, '%')
+            </if>
+            <if test="productTitle != null and productTitle != ''">
+                AND product_title like concat('%', #{productTitle}, '%')
+            </if>
+        </where>
     </select>
 
     <delete id="deleteProductById" parameterType="Long">

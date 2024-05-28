@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserService {
             user.setPassword(
                     SecureUtil.md5(username + password + salt));
             user.setUserName(username);
+            user.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
             user.setCreateTime(DateTime.now());
             user.setUpdateTime(DateTime.now());
             userMapper.insertUser(user);

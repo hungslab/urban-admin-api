@@ -16,7 +16,7 @@ public interface OrderMapper {
 
     Order selectOrderById(Long id);
 
-    int deleteOrderById(Long id);
+    int deleteOrderById(Long orderId);
 
     int deleteOrderByIds(String[] ids);
 

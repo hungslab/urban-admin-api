@@ -46,6 +46,20 @@
 			<version>1.4.6</version>
 		</dependency>
 
+		<!-- 敏感词工具包 -->
+		<dependency>
+			<groupId>com.github.houbb</groupId>
+			<artifactId>sensitive-word</artifactId>
+			<version>0.2.1</version>
+		</dependency>
+
+		<!--支付宝支付-->
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+			<version>4.22.37.ALL</version>
+		</dependency>
+
 		<!-- 阿里数据库连接池 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -58,6 +72,12 @@
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>4.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.4.2</version>
 		</dependency>
 
 		<!--  oss相关  -->
